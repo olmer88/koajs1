@@ -7,22 +7,18 @@ const app = new Koa();
 var router = new Router();
 render(app, {
   root: path.join(__dirname, 'view'),
-  // layout: 'template',
-  layout: false,
+  layout: 'layout',
   viewExt: 'html',
   cache: false,
   // debug: true
 });
 
 router
-  .get(new RegExp('/myFirst'), async function (ctx) {
-    await ctx.render('index');
-  })
-  .get('/myFirstRoute', async function (ctx) {
-    ctx.body = 'Hello World';
-  })
   .get('/', async function (ctx) {
-    ctx.body = 'NOT Hello World';
+    await ctx.render('index', { title: 'home' });
+  })
+  .get('/list', async function (ctx) {
+    await ctx.render('list', { title: 'list' });
   });
 
 app.use(router.routes());
