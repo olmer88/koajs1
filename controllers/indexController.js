@@ -22,7 +22,4 @@ module.exports = {
   async addListAction() {
 
   },
-  async editTodosAction() {
-
-  }
-};
+ };
