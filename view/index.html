@@ -1,5 +1,12 @@
 
 <ul>
-  <li><a href="/list">todo today</a></li>
-  <li><a href="/list">todo tomorrow</a></li>
+  <% lists.forEach(list => { %>
+  <li><a href="/list/<%= list.listId %>"><%= list.name %></a></li>
+  <% }) %>
+  <li>
+    <form action="/add-list" method="post">
+      <input name="name" placeholder="list name">
+      <input type="submit" value="Add new list">
+    </form>
+  </li>
 </ul>
