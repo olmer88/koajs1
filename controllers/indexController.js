@@ -12,6 +12,7 @@ module.exports = {
       title: 'list',
       name,
       todos: todos.map(({ text }) => text),
+      listId: id,
     };
     await ctx.render('list', viewContext);
   },
@@ -19,7 +20,20 @@ module.exports = {
     const lists = await listsManager.getAll();
     await ctx.render('index', { title: 'home', lists });
   },
-  async addListAction() {
-
+  async addListAction(ctx) {
+    await listsManager.addList(ctx.request.body);
+    ctx.redirect('/');
   },
- };
+  async deleteListAction(ctx) {
+    await listsManager.delete(ctx.query.listId);
+    ctx.redirect('/');
+  },
+  async addTodoAction(ctx) {
+    const body = ctx.request.body;
+    await todosManager.addTodo(body);
+    ctx.redirect(`/list/${body.listId}`);
+  },
+  async checkTodoAction(ctx) {
+    ctx.body = 'ok';
+  }
+};

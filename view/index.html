@@ -1,7 +1,16 @@
 
 <ul>
   <% lists.forEach(list => { %>
-  <li><a href="/list/<%= list.listId %>"><%= list.name %></a></li>
+  <li>
+    <a href="/list/<%= list.listId %>"><%= list.name %></a>
+    <a
+      href="/del-list?listId=<%= list.listId %>"
+      onclick="return confirm('List will be deleted')"
+      style="color: red"
+    >
+      x
+    </a>
+  </li>
   <% }) %>
   <li>
     <form action="/add-list" method="post">

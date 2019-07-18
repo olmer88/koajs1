@@ -1,7 +1,8 @@
 const knex = require('./knexManager');
 
+const getQueryBuilder = () => knex('todos');
+
 module.exports = {
-  getTodos(listId) {
-    return knex('todos').where({ listId });
-  }
+  getTodos: (listId) => getQueryBuilder().where({ listId }),
+  addTodo: (todo) => getQueryBuilder().insert(todo),
 };

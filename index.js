@@ -1,6 +1,7 @@
 const Koa = require('koa');
 var Router = require('koa-router');
 const render = require('koa-ejs');
+const bodyparser = require('koa-bodyparser');
 const path = require('path');
 const indexController = require('./controllers/indexController');
 
@@ -17,7 +18,12 @@ render(app, {
 router
   .get('/', indexController.indexAction)
   .get('/list/:id', indexController.listAction)
-  .post('/add-list', indexController.addListAction);
+  .get('/del-list', indexController.deleteListAction)
+  .post('/add-list', indexController.addListAction)
+  .post('/add-todo', indexController.addTodoAction)
+  .post('/check-todo', indexController.checkTodoAction);
 
-app.use(router.routes());
-app.listen(3000);
+app
+  .use(bodyparser())
+  .use(router.routes())
+  .listen(3000);
