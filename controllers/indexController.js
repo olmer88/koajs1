@@ -11,7 +11,7 @@ module.exports = {
     const viewContext = {
       title: 'list',
       name,
-      todos: todos.map(({ text }) => text),
+      todos,
       listId: id,
     };
     await ctx.render('list', viewContext);
@@ -25,7 +25,7 @@ module.exports = {
     ctx.redirect('/');
   },
   async deleteListAction(ctx) {
-    await listsManager.delete(ctx.query.listId);
+    await listsManager.delete(ctx.request.body.listId);
     ctx.redirect('/');
   },
   async addTodoAction(ctx) {
@@ -34,6 +34,13 @@ module.exports = {
     ctx.redirect(`/list/${body.listId}`);
   },
   async checkTodoAction(ctx) {
-    ctx.body = 'ok';
+    const { body } = ctx.request;
+    const { todoId } = body;
+    if (body.done) {
+      await todosManager.check(todoId);
+    } else {
+      await todosManager.unCheck(todoId);
+    }
+    ctx.redirect('/list/6');
   }
 };

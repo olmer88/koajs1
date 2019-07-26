@@ -2,14 +2,16 @@
 <% todos.forEach((item) => { %>
 <label>
     <form action="/check-todo" method="post" style="display: inline">
+        <input type="hidden" name="todoId" value="<%= item.todoId %>">
         <input
           type="checkbox"
           onchange="this.form.submit()"
           name="done"
           value="1"
+        <%= item.done ? 'checked' : '' %>
         >
     </form>
-    <%= item %>
+    <%= item.text %>
 </label>
 <br>
 <% })%>

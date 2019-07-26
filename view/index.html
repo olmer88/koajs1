@@ -3,18 +3,15 @@
   <% lists.forEach(list => { %>
   <li>
     <a href="/list/<%= list.listId %>"><%= list.name %></a>
-    <a
-      href="/del-list?listId=<%= list.listId %>"
-      onclick="return confirm('List will be deleted')"
-      style="color: red"
-    >
-      x
-    </a>
+    <form style="display: inline" action="/del-list" method="post">
+      <input type="hidden" name="listId" value="<%= list.listId %>">
+      <input type="submit" value="x" style="color: red; border: hidden; background-color: white;">
+    </form>
   </li>
   <% }) %>
   <li>
     <form action="/add-list" method="post">
-      <input name="name" placeholder="list name">
+      <input name="name" placeholder="list name" required>
       <input type="submit" value="Add new list">
     </form>
   </li>

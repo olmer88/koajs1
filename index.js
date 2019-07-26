@@ -18,7 +18,7 @@ render(app, {
 router
   .get('/', indexController.indexAction)
   .get('/list/:id', indexController.listAction)
-  .get('/del-list', indexController.deleteListAction)
+  .post('/del-list', indexController.deleteListAction)
   .post('/add-list', indexController.addListAction)
   .post('/add-todo', indexController.addTodoAction)
   .post('/check-todo', indexController.checkTodoAction);
