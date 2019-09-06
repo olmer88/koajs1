@@ -35,12 +35,12 @@ module.exports = {
   },
   async checkTodoAction(ctx) {
     const { body } = ctx.request;
-    const { todoId } = body;
+    const { todoId, listId } = body;
     if (body.done) {
       await todosManager.check(todoId);
     } else {
       await todosManager.unCheck(todoId);
     }
-    ctx.redirect('/list/6');
+    ctx.redirect(`/list/${listId}`);
   }
 };

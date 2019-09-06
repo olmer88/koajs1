@@ -1,7 +1,8 @@
 <h2><%= name %></h2>
 <% todos.forEach((item) => { %>
-<label>
+<label style="<%= item.done ? 'text-decoration: line-through' : ''%>">
     <form action="/check-todo" method="post" style="display: inline">
+        <input type="hidden" name="listId" value="<%= listId %>">
         <input type="hidden" name="todoId" value="<%= item.todoId %>">
         <input
           type="checkbox"
