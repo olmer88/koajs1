@@ -1,3 +1,4 @@
+const moment = require('moment');
 const listsManager = require('../managers/listsManager');
 const todosManager = require('../managers/todosManager');
 
@@ -13,6 +14,7 @@ module.exports = {
       name,
       todos,
       listId: id,
+      moment,
     };
     await ctx.render('list', viewContext);
   },

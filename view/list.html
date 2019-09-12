@@ -1,5 +1,10 @@
 <h2><%= name %></h2>
-<% todos.forEach((item) => { %>
+<% todos.sort((todoA, todoB) => {
+  if(!todoA.done && todoB.done) return -1;
+  if(todoA.done && !todoB.done) return 1;
+  if(todoA.done && todoB.done) return todoB.done - todoA.done;
+  return 0;
+}).forEach((item) => {%>
 <label style="<%= item.done ? 'text-decoration: line-through' : ''%>">
     <form action="/check-todo" method="post" style="display: inline">
         <input type="hidden" name="listId" value="<%= listId %>">
@@ -14,6 +19,23 @@
     </form>
     <%= item.text %>
 </label>
+<% if (item.done) { %>
+<span style="color: grey">
+  <%
+  let formatStr = 'DD-MM-YYYY HH:mm';
+  const now = new Date();
+  const {done} = item;
+    if(
+    done.getFullYear() === now.getFullYear()
+    && done.getMonth() === now.getMonth()
+    && done.getDate() === now.getDate()
+  ) {
+    formatStr = 'HH:mm';
+  }
+  %>
+  <%= moment(item.done).format(formatStr) %>
+</span>
+<% } %>
 <br>
 <% })%>
 <form action="/add-todo" method="post">
