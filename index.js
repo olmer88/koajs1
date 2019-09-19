@@ -2,10 +2,13 @@ const Koa = require('koa');
 var Router = require('koa-router');
 const render = require('koa-ejs');
 const bodyparser = require('koa-bodyparser');
+const session = require('koa-session');
 const path = require('path');
 const indexController = require('./controllers/indexController');
 
 const app = new Koa();
+app.keys = ['some secret hurr'];
+app.use(session({}, app));
 var router = new Router();
 render(app, {
   root: path.join(__dirname, 'view'),

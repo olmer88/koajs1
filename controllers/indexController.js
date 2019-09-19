@@ -20,7 +20,10 @@ module.exports = {
   },
   async indexAction(ctx) {
     const lists = await listsManager.getAll();
-    await ctx.render('index', { title: 'home', lists });
+    let views = ctx.session.views || 0;
+    views = views + 1;
+    ctx.session.views = views;
+    await ctx.render('index', { title: 'home', lists, views });
   },
   async addListAction(ctx) {
     await listsManager.addList(ctx.request.body);
