@@ -1,6 +1,7 @@
 const moment = require('moment');
 const listsManager = require('../managers/listsManager');
 const todosManager = require('../managers/todosManager');
+const usersManager = require('../managers/usersManager');
 
 module.exports = {
   async listAction(ctx) {
@@ -18,12 +19,27 @@ module.exports = {
     };
     await ctx.render('list', viewContext);
   },
+  async showLoginAction(ctx) {
+    await ctx.render('login', { title: 'login' });
+  },
+  async loginAction(ctx) {
+    const { email, password } = ctx.request.body;
+    const [user] = await usersManager.getUser({ email, password });
+    if (user) {
+      ctx.session.userId = user.userId;
+      ctx.redirect('/');
+      return;
+    }
+    ctx.redirect('/login');
+  },
   async indexAction(ctx) {
     const lists = await listsManager.getAll();
-    let views = ctx.session.views || 0;
-    views = views + 1;
-    ctx.session.views = views;
-    await ctx.render('index', { title: 'home', lists, views });
+    const { userId } = ctx.session;
+    if (!userId) {
+      ctx.redirect('/login');
+      return;
+    }
+    await ctx.render('index', { title: 'home', lists, userId });
   },
   async addListAction(ctx) {
     await listsManager.addList(ctx.request.body);

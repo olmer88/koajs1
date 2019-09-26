@@ -20,6 +20,8 @@ render(app, {
 
 router
   .get('/', indexController.indexAction)
+  .get('/login', indexController.showLoginAction)
+  .post('/login', indexController.loginAction)
   .get('/list/:id', indexController.listAction)
   .post('/del-list', indexController.deleteListAction)
   .post('/add-list', indexController.addListAction)
